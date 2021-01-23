@@ -47,7 +47,7 @@ RedirectURL: "https://example.com/"
 When you run `auth`, some messages will be displayed in the console as follows.
 
 ```
-map[CID:YOUR-CLIENT-ID RedirectURL:https://www.zono.dev/ Secret:YOUR-SECRET]
+map[CID:YOUR-CLIENT-ID RedirectURL:https://example.com/ Secret:YOUR-SECRET]
 [user.activity,user.metrics,user.info]
 URL to authorize:http://account.withings.com/oauth2_user/authorize2?access_type=offline&client_id=yourclientid&redirect_uri=https%3A%2F%2Fexample.com&response_type=code&scope=user.activity%2Cuser.metrics%2Cuser.info&state=state
 Open url your browser and Enter your grant code here.
