@@ -14,7 +14,7 @@ More Withings API document can be found in [Withings developer documentation](ht
 
 ## Installation
 
-`go get github.com/zono-dev/withings-go`
+`go get github.com/zono-dev/withings-go/withings`
 
 ## Getting started
 
@@ -28,7 +28,7 @@ If you have any Withings gear, you should already have your Withings account.
 
 ### Setup your settings file
 
-Create `.test_settings.yaml` in `cmd/auth`.
+Create `.test_settings.yaml` in your working directory.
 
 Tip: In the `cmd` directory, there is examples of how to use withings-go.
 
@@ -40,10 +40,9 @@ Secret: "YOUR CONSUMER SECRET HERE"
 RedirectURL: "https://example.com/"
 ```
 
-`cd cmd/auth`, and `go build` then `auth` will be generated.
-
 ### Run
 
+Copy `cmd/auth/main.go` to your working directory and `go build -o auth`.
 When you run `auth`, some messages will be displayed in the console as follows.
 
 ```
@@ -66,7 +65,7 @@ Lastly, your `access_token.json` will be generated in `cmd/auth`.
 
 ## Get Measurements 
 
-Create `.test_settings.yaml` in `cmd/getMeasurements`.
+Create `.test_settings.yaml` in your working directory.
 
 `.test_settings.yaml` sample is here.
 
@@ -76,8 +75,6 @@ Secret: "YOUR CONSUMER SECRET HERE"
 RedirectURL: "https://example.com/"
 ```
 
-`cd cmd/getMeasurements` and `go build` then `getMeasurements` will be generated.
+Copy `cmd/getMeasurements/main.go` to your working directory and `go build -o getMeasurements`.
 
 When you run `getMeasurements`, your measurements will be displayed in the console.
-
-###
