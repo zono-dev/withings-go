@@ -1,0 +1,162 @@
+{
+    "status":0,
+    "body":{
+        "series":[
+            {
+                "startdate":1609603140,
+                "state":0,
+                "enddate":1609603260,
+                "model":"Activite Steel HR",
+                "model_id":55
+            },
+            {
+                "startdate":1609603260,
+                "state":1,
+                "enddate":1609603740,
+                "model":"Activite Steel HR",
+                "model_id":55
+            },
+            {
+                "startdate":1609615260,
+                "state":1,
+                "enddate":1609615860,
+                "model":"Activite Steel HR",
+                "model_id":55
+            },
+            {
+                "startdate":1609615860,
+                "state":2,
+                "enddate":1609616100,
+                "model":"Activite Steel HR",
+                "model_id":55
+            },
+            {
+                "startdate":1609616100,
+                "state":1,
+                "enddate":1609616820,
+                "model":"Activite Steel HR",
+                "model_id":55
+            },
+            {
+                "startdate":1609616820,
+                "state":2,
+                "enddate":1609618020,
+                "model":"Activite Steel HR",
+                "model_id":55
+            },
+            {
+                "startdate":1609618020,
+                "state":1,
+                "enddate":1609619040,
+                "model":"Activite Steel HR",
+                "model_id":55
+            },
+            {
+                "startdate":1609619040,
+                "state":2,
+                "enddate":1609619460,
+                "model":"Activite Steel HR",
+                "model_id":55
+            },
+            {
+                "startdate":1609619460,
+                "state":1,
+                "enddate":1609620480,
+                "model":"Activite Steel HR",
+                "model_id":55
+            },
+            {
+                "startdate":1609620480,
+                "state":2,
+                "enddate":1609621080,
+                "model":"Activite Steel HR",
+                "model_id":55
+            },
+            {
+                "startdate":1609621080,
+                "state":1,
+                "enddate":1609621980,
+                "model":"Activite Steel HR",
+                "model_id":55
+            },
+            {
+                "startdate":1609621980,
+                "state":2,
+                "enddate":1609622580,
+                "model":"Activite Steel HR",
+                "model_id":55
+            },
+            {
+                "startdate":1609603740,
+                "state":2,
+                "enddate":1609606920,
+                "model":"Activite Steel HR",
+                "model_id":55
+            },
+            {
+                "startdate":1609622580,
+                "state":1,
+                "enddate":1609623900,
+                "model":"Activite Steel HR",
+                "model_id":55
+            },
+            {
+                "startdate":1609623900,
+                "state":2,
+                "enddate":1609624380,
+                "model":"Activite Steel HR",
+                "model_id":55
+            },
+            {
+                "startdate":1609606920,
+                "state":1,
+                "enddate":1609608420,
+                "model":"Activite Steel HR",
+                "model_id":55
+            },
+            {
+                "startdate":1609608420,
+                "state":2,
+                "enddate":1609611000,
+                "model":"Activite Steel HR",
+                "model_id":55
+            },
+            {
+                "startdate":1609611000,
+                "state":1,
+                "enddate":1609612020,
+                "model":"Activite Steel HR",
+                "model_id":55
+            },
+            {
+                "startdate":1609612020,
+                "state":2,
+                "enddate":1609612200,
+                "model":"Activite Steel HR",
+                "model_id":55
+            },
+            {
+                "startdate":1609612200,
+                "state":1,
+                "enddate":1609614780,
+                "model":"Activite Steel HR",
+                "model_id":55
+            },
+            {
+                "startdate":1609614780,
+                "state":2,
+                "enddate":1609615140,
+                "model":"Activite Steel HR",
+                "model_id":55
+            },
+            {
+                "startdate":1609615140,
+                "state":1,
+                "enddate":1609615260,
+                "model":"Activite Steel HR",
+                "model_id":55
+            }
+        ],
+        "model":16
+    }
+}
