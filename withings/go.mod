@@ -1,4 +1,4 @@
-module withings
+module github.com/zono-dev/withings-go/withings
 
 go 1.15
 
