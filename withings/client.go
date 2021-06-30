@@ -14,7 +14,7 @@ import (
 	"strings"
 	"time"
 
-	"golang.org/x/oauth2"
+	//"golang.org/x/oauth2"
 	"gopkg.in/yaml.v2"
 )
 
@@ -27,8 +27,8 @@ const (
 // Client type
 type Client struct {
 	Client       *http.Client
-	Conf         *oauth2.Config
-	Token        *oauth2.Token
+	Conf         *Config
+	Token        *Token
 	Timeout      time.Duration
 	MeasureURL   string
 	MeasureURLv2 string
@@ -40,9 +40,9 @@ type ClientOption func(*http.Client) error
 
 // AuthorizeOffline provides oauth2 authorization for withings in CLI.
 // See example/main.go to know the detail.
-func AuthorizeOffline(conf *oauth2.Config) (*oauth2.Token, error) {
+func AuthorizeOffline(conf *Config) (*Token, error) {
 
-	url := conf.AuthCodeURL("state", oauth2.AccessTypeOffline)
+	url := conf.AuthCodeURL("state", AccessTypeOffline)
 
 	fmt.Printf("URL to authorize:%s\n", url)
 
@@ -89,7 +89,7 @@ func New(cid, secret, redirectURL string, options ...ClientOption) (*Client, err
 	conf := GetNewConf(cid, secret, redirectURL)
 	c := &Client{}
 	c.Conf = &conf
-	c.Token = &oauth2.Token{}
+	c.Token = &Token{}
 	c.Client = GetClient(c.Conf, c.Token)
 	c.Timeout = 5 * time.Second
 	c.MeasureURL = defaultMeasureURL
@@ -122,7 +122,7 @@ func (c *Client) PrintTimeout() {
 }
 
 // ReadToken read from a file and that token is set to client.
-func (c *Client) ReadToken(path2file string) (*oauth2.Token, error) {
+func (c *Client) ReadToken(path2file string) (*Token, error) {
 	t, err := readToken(path2file)
 	if err != nil {
 		return nil, err
@@ -132,8 +132,8 @@ func (c *Client) ReadToken(path2file string) (*oauth2.Token, error) {
 	return c.Token, nil
 }
 
-func readToken(path2file string) (*oauth2.Token, error) {
-	token := &oauth2.Token{}
+func readToken(path2file string) (*Token, error) {
+	token := &Token{}
 	file, err := os.Open(path2file)
 	if err == nil {
 		json.NewDecoder(file).Decode(token)
@@ -150,7 +150,7 @@ func (c *Client) SaveToken(path2file string) error {
 	return saveToken(c.Token, fname)
 }
 
-func saveToken(t *oauth2.Token, path2file string) error {
+func saveToken(t *Token, path2file string) error {
 	file, err := os.Create(path2file)
 	if err != nil {
 		return err
@@ -164,7 +164,7 @@ func saveToken(t *oauth2.Token, path2file string) error {
 }
 
 // RefreshToken get new token if necessary.
-func (c *Client) RefreshToken() (*oauth2.Token, bool, error) {
+func (c *Client) RefreshToken() (*Token, bool, error) {
 	newToken, err := refreshToken(c.Conf, c.Token)
 	if err != nil {
 		return nil, false, err
@@ -181,7 +181,7 @@ func (c *Client) RefreshToken() (*oauth2.Token, bool, error) {
 	return c.Token, isNewToken, nil
 }
 
-func refreshToken(conf *oauth2.Config, token *oauth2.Token) (*oauth2.Token, error) {
+func refreshToken(conf *Config, token *Token) (*Token, error) {
 	newToken, err := (conf.TokenSource(context.Background(), token).Token())
 	if err != nil {
 		return nil, err
@@ -196,14 +196,14 @@ func (c *Client) Do(req *http.Request) (*http.Response, error) {
 }
 
 // GetNewConf returns oauth2.Config with client id, secret, and redirectURL
-func GetNewConf(cid, secret, redirectURL string) oauth2.Config {
+func GetNewConf(cid, secret, redirectURL string) Config {
 	scopes := []string{ScopeActivity, ScopeMetrics, ScopeInfo}
-	conf := oauth2.Config{
+	conf := Config{
 		RedirectURL:  redirectURL,
 		ClientID:     cid,
 		ClientSecret: secret,
 		Scopes:       []string{strings.Join([]string(scopes), ",")},
-		Endpoint: oauth2.Endpoint{
+		Endpoint: Endpoint{
 			AuthURL:  authURL,
 			TokenURL: tokenURL,
 		},
@@ -212,7 +212,7 @@ func GetNewConf(cid, secret, redirectURL string) oauth2.Config {
 }
 
 // GetClient returns *http.Client which based on conf, token.
-func GetClient(conf *oauth2.Config, token *oauth2.Token) *http.Client {
+func GetClient(conf *Config, token *Token) *http.Client {
 	client := conf.Client(context.Background(), token)
 	return client
 }
@@ -222,7 +222,7 @@ func (c *Client) PrintToken() {
 	printToken(c.Token)
 }
 
-func printToken(t *oauth2.Token) {
+func printToken(t *Token) {
 	layout := "2006-01-02 15:04:05"
 	extraKeys := []string{"access_token", "expires_in", "refresh_token", "scope", "token_type", "userid"}
 
@@ -252,7 +252,7 @@ func (c *Client) PrintConf() {
 	printConf(c.Conf)
 }
 
-func printConf(conf *oauth2.Config) {
+func printConf(conf *Config) {
 	fmt.Printf("RedirectURL: %v\n", conf.RedirectURL)
 	fmt.Printf("ClientID: %v\n", conf.ClientID)
 	fmt.Printf("ClientSecret: %v\n", conf.ClientSecret)
