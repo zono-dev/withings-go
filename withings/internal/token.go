@@ -14,6 +14,7 @@ import (
 	"math"
 	"mime"
 	"net/http"
+	"net/http/httputil"
 	"net/url"
 	"strconv"
 	"strings"
@@ -238,6 +239,12 @@ func doTokenRoundTrip(ctx context.Context, req *http.Request) (*Token, error) {
 	if err != nil {
 		return nil, err
 	}
+	dump, err := httputil.DumpResponse(r, true)
+	if err != nil {
+		return nil, err
+	}
+	fmt.Printf("%q", dump)
+
 	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1<<20))
 	r.Body.Close()
 	if err != nil {

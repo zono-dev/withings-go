@@ -6,7 +6,7 @@
 // OAuth2 authorized and authenticated HTTP requests,
 // as specified in RFC 6749.
 // It can additionally grant authorization with Bearer JWT.
-package withings // import "golang.org/x/oauth2"
+package withings
 
 import (
 	"bytes"

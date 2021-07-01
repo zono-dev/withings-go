@@ -19,8 +19,9 @@ import (
 )
 
 const (
-	authURL          = "http://account.withings.com/oauth2_user/authorize2"
-	tokenURL         = "https://account.withings.com/oauth2/token"
+	authURL = "http://account.withings.com/oauth2_user/authorize2"
+	//tokenURL         = "https://account.withings.com/oauth2/token" // will be deprecated
+	tokenURL         = "https://wbsapi.withings.net/v2/oauth2"
 	defaultTokenFile = ".access_token.json"
 )
 
