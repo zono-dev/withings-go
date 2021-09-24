@@ -190,6 +190,27 @@ for _, v := range act.Body.Activities {
 
 ```
 
+### Get Workouts
+
+```Go
+// GetWorkouts call withings API Measure v2 - Getworkouts. (https://developer.withings.com/api-reference#operation/measurev2-getworkouts)
+// startdate/enddate: Workouts result start date, end date.
+// lastupdate : Timestamp for requesting data that were updated or created after this date. Use this instead of startdate+endate. If lastupdate is set to a timestamp other than Offsetbase, GetWorkouts will use lastupdate in preference to startdate/enddate.
+// offset: When a first call retuns more:1 and offset:XX, set value XX in this parameter to retrieve next available rows.
+// wtype: Workout Type. Set the workout type you want to get data. See WorkoutType in enum.go.
+workouts, err := client.GetWorkouts(sd, ed, 0, 0, withings.WTCalories, withings.WTEffduration, withings.WTSteps, withings.WTDistance)
+
+if err != nil {
+	fmt.Println("getWorkouts Error.")
+	fmt.Println(err)
+	return
+}
+
+for _, v := range workouts.Body.Series {
+	fmt.Printf("Date:%s, Category: %d, Duration: %d, Steps:%d, Distance:%.1f, Calories: %.1f\n", v.Date, v.Category, v.Data.Effduration, v.Data.Steps, v.Data.Distance, v.Data.Calories)
+}
+```
+
 ### Get Sleep
 
 ```Go

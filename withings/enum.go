@@ -32,6 +32,7 @@ const (
 const (
 	MeasureA  string = "getmeas"
 	ActivityA string = "getactivity"
+	WorkoutsA string = "getworkouts"
 	SleepA    string = "get"
 	SleepSA   string = "getsummary"
 )
@@ -90,6 +91,89 @@ const (
 	HrZone1       ActivityType = "hr_zone_1"     // Duration in seconds when heart rate was in a moderate zone.
 	HrZone2       ActivityType = "hr_zone_2"     // Duration in seconds when heart rate was in an intense zone.
 	HrZone3       ActivityType = "hr_zone_3"     // Duration in seconds when heart rate was in maximal zone.
+)
+
+// WorkoutType is workout type
+type WorkoutType string
+
+// Workout Type
+const (
+	WTCalories          WorkoutType = "calories"            // Active calories burned (in Kcal).
+	WTEffduration       WorkoutType = "effduration"         // Effective duration.
+	WTIntensity         WorkoutType = "intensity"           // Intensity.
+	WTManualDistance    WorkoutType = "manual_distance"     // Distance travelled manually entered by user (in meters).
+	WTManualCalories    WorkoutType = "manual_calories"     // Active calories burned manually entered by user (in Kcal).
+	WTHrAverage         WorkoutType = "hr_average"          // Average heart rate.
+	WTHrMin             WorkoutType = "hr_min"              // Minimal heart rate.
+	WTHrMax             WorkoutType = "hr_max"              // Maximal heart rate.
+	WTHrZone0           WorkoutType = "hr_zone_0"           // Duration in seconds when heart rate was in a light zone (cf. Glossary).
+	WTHrZone1           WorkoutType = "hr_zone_1"           // Duration in seconds when heart rate was in a moderate zone (cf. Glossary).
+	WTHrZone2           WorkoutType = "hr_zone_2"           // Duration in seconds when heart rate was in an intense zone (cf. Glossary).
+	WTHrZone3           WorkoutType = "hr_zone_3"           // Duration in seconds when heart rate was in maximal zone (cf. Glossary).
+	WTPauseDuration     WorkoutType = "pause_duration"      // Total pause time in second filled by user
+	WTAlgoPauseDuration WorkoutType = "algo_pause_duration" // Total pause time in seconds detected by Withings device (swim only)
+	WTSpo2Average       WorkoutType = "spo2_average"        // Average percent of SpO2 percent value during a workout
+	WTSteps             WorkoutType = "steps"               // Number of steps.
+	WTDistance          WorkoutType = "distance"            // Distance travelled (in meters).
+	WTElevation         WorkoutType = "elevation"           // Number of floors climbed.
+	WTPoolLaps          WorkoutType = "pool_laps"           // Number of pool laps.
+	WTStrokes           WorkoutType = "strokes"             // Number of strokes.
+	WTPoolLength        WorkoutType = "pool_length"         // Length of the pool.
+)
+
+// WorkoutCategory is category of workout
+type WorkoutCategory int
+
+// Workout Category
+const (
+	WCWalk          WorkoutCategory = 1
+	WCRun           WorkoutCategory = 2
+	WCHiking        WorkoutCategory = 3
+	WCSkating       WorkoutCategory = 4
+	WCBMX           WorkoutCategory = 5
+	WCBicycling     WorkoutCategory = 6
+	WCSwimming      WorkoutCategory = 7
+	WCSurfing       WorkoutCategory = 8
+	WCKitesurfing   WorkoutCategory = 9
+	WCWindsurfing   WorkoutCategory = 10
+	WCBodyboard     WorkoutCategory = 11
+	WCTennis        WorkoutCategory = 12
+	WCTableTennis   WorkoutCategory = 13
+	WCSquash        WorkoutCategory = 14
+	WCBadminton     WorkoutCategory = 15
+	WCLiftWeights   WorkoutCategory = 16
+	WCCalisthenics  WorkoutCategory = 17
+	WCElliptical    WorkoutCategory = 18
+	WCPilates       WorkoutCategory = 19
+	WCBasketBall    WorkoutCategory = 20
+	WCSoccer        WorkoutCategory = 21
+	WCFootball      WorkoutCategory = 22
+	WCRugby         WorkoutCategory = 23
+	WCVolleyBall    WorkoutCategory = 24
+	WCWaterpolo     WorkoutCategory = 25
+	WCHorseRiding   WorkoutCategory = 26
+	WCGolf          WorkoutCategory = 27
+	WCYoga          WorkoutCategory = 28
+	WCDancing       WorkoutCategory = 29
+	WCBoxing        WorkoutCategory = 30
+	WCFencing       WorkoutCategory = 31
+	WCWrestling     WorkoutCategory = 32
+	WCMartialArts   WorkoutCategory = 33
+	WCSkiing        WorkoutCategory = 34
+	WCSnowboarding  WorkoutCategory = 35
+	WCOther         WorkoutCategory = 36
+	WCNoActivity    WorkoutCategory = 128
+	WCRowing        WorkoutCategory = 187
+	WCZumba         WorkoutCategory = 188
+	WCBaseball      WorkoutCategory = 191
+	WCHandball      WorkoutCategory = 192
+	WCHockey        WorkoutCategory = 193
+	WCIceHockey     WorkoutCategory = 194
+	WCClimbing      WorkoutCategory = 195
+	WCIceSkating    WorkoutCategory = 196
+	WCMultiSport    WorkoutCategory = 272
+	WCIndoorRunning WorkoutCategory = 307
+	WCIndoorCycling WorkoutCategory = 308
 )
 
 // SleepType is Sleep Type.
