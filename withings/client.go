@@ -5,9 +5,11 @@
 package withings
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -20,7 +22,7 @@ import (
 
 const (
 	authURL          = "http://account.withings.com/oauth2_user/authorize2"
-	tokenURL         = "https://account.withings.com/oauth2/token"
+	tokenURL         = "https://wbsapi.withings.net/v2/oauth2"
 	defaultTokenFile = ".access_token.json"
 )
 
@@ -50,7 +52,7 @@ func AuthorizeOffline(conf *oauth2.Config) (*oauth2.Token, error) {
 	fmt.Printf("Open url your browser and Enter your grant code here.\n Grant Code:")
 	fmt.Scan(&grantcode)
 
-	token, err := conf.Exchange(context.Background(), grantcode)
+	token, err := conf.Exchange(newOauthContext(), grantcode)
 	if err != nil {
 		fmt.Println("Failed to oauth2 exchange.")
 		return nil, err
@@ -182,7 +184,7 @@ func (c *Client) RefreshToken() (*oauth2.Token, bool, error) {
 }
 
 func refreshToken(conf *oauth2.Config, token *oauth2.Token) (*oauth2.Token, error) {
-	newToken, err := (conf.TokenSource(context.Background(), token).Token())
+	newToken, err := (conf.TokenSource(newOauthContext(), token).Token())
 	if err != nil {
 		return nil, err
 	}
@@ -214,7 +216,7 @@ func GetNewConf(cid, secret, redirectURL string) oauth2.Config {
 
 // GetClient returns *http.Client which based on conf, token.
 func GetClient(conf *oauth2.Config, token *oauth2.Token) *http.Client {
-	client := conf.Client(context.Background(), token)
+	client := oauth2.NewClient(context.Background(), conf.TokenSource(newOauthContext(), token))
 	return client
 }
 
@@ -260,4 +262,99 @@ func printConf(conf *oauth2.Config) {
 	fmt.Printf("Scopes: %v\n", conf.Scopes)
 	fmt.Printf("Endpoint(AuthURL): %v\n", conf.Endpoint.AuthURL)
 	fmt.Printf("Endpoint(TokenURL): %v\n", conf.Endpoint.TokenURL)
+}
+
+// newOauthContext returns context.Context with
+// custom http client for withings's access and refresh tokens endpoints.
+func newOauthContext() context.Context {
+	c := &http.Client{Transport: &oauthTransport{}}
+	return context.WithValue(context.Background(), oauth2.HTTPClient, c)
+}
+
+// oauthTransport is making custom request and response for withings api.
+type oauthTransport struct{}
+
+// RoundTrip customize request and response for withings api.
+func (t *oauthTransport) RoundTrip(r *http.Request) (*http.Response, error) {
+	if err := interceptRequest(r); err != nil {
+		return nil, err
+	}
+
+	res, err := http.DefaultTransport.RoundTrip(r)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := interceptResponse(res); err != nil {
+		return nil, err
+	}
+
+	return res, nil
+}
+
+// interceptRequest sets action=requesttoken param.
+// this param is required for withings api, but not oauth specification.
+func interceptRequest(req *http.Request) error {
+	if err := req.ParseForm(); err != nil {
+		return fmt.Errorf("cannot parse request form: %v", err)
+	}
+
+	req.PostForm.Set("action", "requesttoken")
+	encoded := req.PostForm.Encode()
+	req.Body = ioutil.NopCloser(strings.NewReader(encoded))
+	req.ContentLength = int64(len(encoded))
+
+	return nil
+}
+
+// interceptResponse flattens response.
+// withings's response body is nested.
+// example)
+// from:
+//     {
+//       "status": 0,
+//       "body": {
+//         "userid": "363",
+//         "access_token": "a075f8c14fb8df40b08ebc8508533dc332a6910a",
+//         "refresh_token": "f631236f02b991810feb774765b6ae8e6c6839ca",
+//         "expires_in": 10800,
+//         "scope": "user.info,user.metrics",
+//         "csrf_token": "PACnnxwHTaBQOzF7bQqwFUUotIuvtzSM",
+//         "token_type": "Bearer"
+//       }
+//     }
+// to:
+//     {
+//       "userid": "363",
+//       "access_token": "a075f8c14fb8df40b08ebc8508533dc332a6910a",
+//       "refresh_token": "f631236f02b991810feb774765b6ae8e6c6839ca",
+//       "expires_in": 10800,
+//       "scope": "user.info,user.metrics",
+//       "csrf_token": "PACnnxwHTaBQOzF7bQqwFUUotIuvtzSM",
+//       "token_type": "Bearer"
+//     }
+func interceptResponse(res *http.Response) error {
+	body, err := ioutil.ReadAll(res.Body)
+	res.Body.Close()
+	if err != nil {
+		return fmt.Errorf("cannot read response body: %v", err)
+	}
+
+	var withingsRes struct {
+		Status int             `json:"status"`
+		Body   json.RawMessage `json:"body"`
+		Error  string          `json:"error,omitempty"`
+	}
+	err = json.NewDecoder(bytes.NewReader(body)).Decode(&withingsRes)
+	if err != nil || withingsRes.Error != "" {
+		return &oauth2.RetrieveError{
+			Response: res,
+			Body:     body,
+		}
+	}
+
+	res.Body = ioutil.NopCloser(bytes.NewReader(withingsRes.Body))
+	res.ContentLength = int64(len(withingsRes.Body))
+
+	return nil
 }
