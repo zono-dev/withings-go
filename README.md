@@ -9,11 +9,11 @@ Also withings-go document can be found in [withings · pkg.go.dev](https://pkg.g
 ## Supported Resources
 
 - Offline Authorization
-- [Measure - Getmeas](https://developer.withings.com/oauth2/#operation/measure-getmeas)
-- [Measure v2 - Getactivity](https://developer.withings.com/oauth2/#operation/measurev2-getactivity)
-- [Mehsure v2 - Getworkouts](https://developer.withings.com/api-reference/#operation/measurev2-getworkouts)
-- [Sleep v2 - Get](https://developer.withings.com/oauth2/#operation/sleepv2-get)
-- [Sleep v2 - Getsummary](https://developer.withings.com/oauth2/#operation/sleepv2-getsummary)
+- [Measure - Getmeas](https://developer.withings.com/api-reference/#operation/measure-getmeas)
+- [Measure v2 - Getactivity](https://developer.withings.com/api-reference/#operation/measurev2-getactivity)
+- [Measure v2 - Getworkouts](https://developer.withings.com/api-reference/#operation/measurev2-getworkouts)
+- [Sleep v2 - Get](https://developer.withings.com/api-reference/#operation/sleepv2-get)
+- [Sleep v2 - Getsummary](https://developer.withings.com/api-reference/#operation/sleepv2-getsummary)
 
 ## Requirements
 
