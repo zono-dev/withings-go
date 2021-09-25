@@ -97,6 +97,51 @@ type Activities struct {
 	} `json:"body"`
 }
 
+// Workouts is raw data from Measure Getworkouts API.
+// See https://developer.withings.com/api-reference#operation/measurev2-getworkouts .
+type Workouts struct {
+	Status int `json:"status"`
+	Body   struct {
+		Series []struct {
+			ID        int64           `json:"id"`
+			Category  WorkoutCategory `json:"category"`
+			Timezone  string          `json:"timezone"`
+			Model     int             `json:"model"`
+			Attrib    int             `json:"attrib"`
+			Startdate int64           `json:"startdate"`
+			Enddate   int64           `json:"enddate"`
+			Date      string          `json:"date"`
+			Modified  int64           `json:"modified"`
+			DeviceID  string          `json:"deviceid"`
+			Data      struct {
+				AlgoPauseDuration int     `json:"algo_pause_duration"`
+				Calories          float64 `json:"calories"`
+				Distance          float64 `json:"distance"`
+				Effduration       int     `json:"effduration"`
+				Elevation         int     `json:"elevation"`
+				HrAverage         int     `json:"hr_average"`
+				HrMax             int     `json:"hr_max"`
+				HrMin             int     `json:"hr_min"`
+				HrZone0           int     `json:"hr_zone_0"`
+				HrZone1           int     `json:"hr_zone_1"`
+				HrZone2           int     `json:"hr_zone_2"`
+				HrZone3           int     `json:"hr_zone_3"`
+				Intensity         int     `json:"intensity"`
+				ManualCalories    int     `json:"manual_calories"`
+				ManualDistance    int     `json:"manual_distance"`
+				PauseDuration     int     `json:"pause_duration"`
+				PoolLaps          int     `json:"pool_laps"`
+				PoolLength        int     `json:"pool_length"`
+				Spo2Average       int     `json:"spo2_average"`
+				Steps             int     `json:"steps"`
+				Strokes           int     `json:"strokes"`
+			} `json:"data"`
+		} `json:"series"`
+		More   bool `json:"more"`
+		Offset int  `json:"offset"`
+	} `json:"body"`
+}
+
 // Sleeps is raw data from Sleep API.
 // See https://developer.withings.com/oauth2/#tag/sleep .
 type Sleeps struct {

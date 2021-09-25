@@ -159,6 +159,24 @@ func testGetactivity() {
 	fmt.Println("========== Getactivity[END] ========== ")
 }
 
+func testGetworkouts() {
+
+	fmt.Println("========== Getworkouts[START] ========== ")
+
+	workouts, err := client.GetWorkouts(sd, ed, 0, 0, withings.WTCalories, withings.WTEffduration, withings.WTSteps, withings.WTDistance)
+
+	if err != nil {
+		fmt.Println("getWorkouts Error.")
+		fmt.Println(err)
+		return
+	}
+
+	for _, v := range workouts.Body.Series {
+		fmt.Printf("Date:%s, Category: %d, Duration: %d, Steps:%d, Distance:%.1f, Calories: %.1f\n", v.Date, v.Category, v.Data.Effduration, v.Data.Steps, v.Data.Distance, v.Data.Calories)
+	}
+	fmt.Println("========== Getworkouts[END] ========== ")
+}
+
 func testGetsleep() {
 	fmt.Println("========== Getsleep[START] ========== ")
 
@@ -231,6 +249,7 @@ func main() {
 
 	testGetmeas()
 	testGetactivity()
+	testGetworkouts()
 	testGetsleep()
 	testGetsleepsummary()
 }
