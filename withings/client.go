@@ -204,8 +204,9 @@ func GetNewConf(cid, secret, redirectURL string) oauth2.Config {
 		ClientSecret: secret,
 		Scopes:       []string{strings.Join([]string(scopes), ",")},
 		Endpoint: oauth2.Endpoint{
-			AuthURL:  authURL,
-			TokenURL: tokenURL,
+			AuthURL:   authURL,
+			TokenURL:  tokenURL,
+			AuthStyle: oauth2.AuthStyleInParams,
 		},
 	}
 	return conf
