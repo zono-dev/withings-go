@@ -129,11 +129,6 @@ if err != nil {
 
 ### Get Measurements
 
-Withings API document here.
-
-[Measure - Getmeas](https://developer.withings.com/oauth2/#operation/measure-getmeas)
-
-
 ```Go
 // GetMeas call withings API Measure - GetMeas. (https://developer.withings.com/oauth2/#operation/measure-getmeas)
 //
